@@ -1,0 +1,107 @@
+# - name: copy deps deb packages
+#   copy:
+#      src: deps/
+#      dest: /var/cache/apt/archives/
+
+- name: install latest git Step One
+  apt_repository:
+      repo: 'ppa:git-core/ppa'
+      state: present
+
+- name: install latest ansible Step One
+  apt_repository:
+      repo: 'ppa:ansible/ansible'
+      state: present
+      
+- name: apt-get update
+  apt:
+      update_cache: yes
+
+- name: install latest git Step Two
+  apt:
+      name: git
+      state: present
+
+- name: install latest ansible Step Two
+  apt:
+      name: ansible
+      state: present
+
+- name: set MySQL root password before installing
+  debconf: name='mysql-server' question='mysql-server/root_password' value='{{mysql_root_pass | quote}}'  vtype='password'
+
+- name: confirm MySQL root password before installing
+  debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{mysql_root_pass | quote}}' vtype='password'
+
+- name: install mysql-server
+  apt:
+      name: mysql-server
+      state: present
+
+- name: create user luhya if not exist
+  user:
+      name: luhya
+      password: "$6$O5u0h7.8QTwi$bQKrLGyeemwkZ8WeZKIq9UExix5T0X9GyDGXLSrPTdyBD8/pBvGRwJbJSmNrobpLKU1vthuHql6lH9p5sWlh50"
+      shell: /bin/bash
+      groups: adm,sudo,cdrom,dip,plugdev,lpadmin,sambashare
+      generate_ssh_key: yes
+      ssh_key_bits: 1024
+      ssh_key_file: .ssh/id_rsa
+
+- name: install monitor depends deb package
+  apt:
+      name: "{{ item }}"
+      state: latest
+  with_items:
+      - libmysqld-dev
+      - libmysqlclient-dev
+      - memcached
+      - libmemcached-tools
+      - apache2
+      - libapache2-mod-wsgi
+      - python2.7
+      - python-pip
+      - python-dev
+      - libssl-dev
+      - libffi-dev
+      - openssl
+      - python-yaml
+      - ifstat
+      - sysstat
+      - sudo
+      - openssh-server
+      - sshfs
+      - iperf
+      - iotop
+      - supervisor
+      - libzmq3-dev
+      - ansible
+      - git
+
+- name: copy monitor's deb package to target host
+  copy:
+     src: "{{ item }}"
+     dest: /tmp/
+  with_items:
+     - alertman-server_1.1_all.deb
+     - educloud-daemon_1.1_all.deb
+     - educloud-monitor_1.1_all.deb
+     - educloud-wtee_1.1_all.deb
+     - grafana-server_1.1_all.deb
+     - prometheus-server_1.1_all.deb
+     - snmp-exporter_1.1_all.deb
+
+- name: install monitor's deb package
+  apt:
+     deb="/tmp/{{ item }}"
+  with_items:
+     - educloud-monitor_1.1_all.deb
+     - educloud-daemon_1.1_all.deb
+     - educloud-wtee_1.1_all.deb
+     - prometheus-server_1.1_all.deb
+     - alertman-server_1.1_all.deb
+     - grafana-server_1.1_all.deb
+     - snmp-exporter_1.1_all.deb
+
+- name: reboot the machie
+  shell: "reboot"

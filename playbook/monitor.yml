@@ -1,0 +1,7 @@
+- hosts: monitor-test
+  become: true
+  become_user: root
+  become_method: sudo
+  roles: 
+      - monitor
+

@@ -1,0 +1,2 @@
+ansible-playbook <task> -i <inventory_path>  -u <user> -K --extra-vars "user=<user>"
+ansible-playbook playbook/ping.yml -i ./geninventory.py -u luhya -k
