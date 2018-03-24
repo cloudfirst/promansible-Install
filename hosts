@@ -1,13 +1,3 @@
 [educloud]
-clc ansible_ssh_host=192.168.0.107
-cc  ansible_ssh_host=192.168.56.109
-nc  ansible_ssh_host=192.168.0.107
-clccc ansible_ssh_host=192.168.0.110
-allinone ansible_ssh_host=192.168.0.107
-monitor-dev ansible_ssh_host=192.168.56.101  ansible_pass='luhya'
-monitor-prod  ansible_ssh_host=192.168.96.108
-monitor-test  ansible_ssh_host=10.147.19.63
-ftp  ansible_ssh_host=192.168.96.18
-allinone-ndp ansible_ssh_host=10.147.17.204
-allinone-hu   ansible_ssh_host=10.147.19.246
-allinone-test ansible_ssh_host=192.168.56.101 
+monitor ansible_ssh_host=192.168.56.104
+

@@ -12,7 +12,7 @@
   apt_repository:
       repo: 'ppa:ansible/ansible'
       state: present
-      
+
 - name: apt-get update
   apt:
       update_cache: yes
@@ -83,25 +83,27 @@
      src: "{{ item }}"
      dest: /tmp/
   with_items:
-     - alertman-server_1.1_all.deb
-     - educloud-daemon_1.1_all.deb
-     - educloud-monitor_1.1_all.deb
-     - educloud-wtee_1.1_all.deb
-     - grafana-server_1.1_all.deb
+     - promansible-monitor_1.1_all.deb
+     - promansible-daemon_1.1_all.deb
+     - promansible-wtee_1.1_all.deb
      - prometheus-server_1.1_all.deb
+     - alertman-server_1.1_all.deb
+     - grafana-server_1.1_all.deb
      - snmp-exporter_1.1_all.deb
+     - node-exporter_1.1_all.deb
 
 - name: install monitor's deb package
   apt:
      deb="/tmp/{{ item }}"
   with_items:
-     - educloud-monitor_1.1_all.deb
-     - educloud-daemon_1.1_all.deb
-     - educloud-wtee_1.1_all.deb
+     - promansible-monitor_1.1_all.deb
+     - promansible-daemon_1.1_all.deb
+     - promansible-wtee_1.1_all.deb
      - prometheus-server_1.1_all.deb
      - alertman-server_1.1_all.deb
      - grafana-server_1.1_all.deb
      - snmp-exporter_1.1_all.deb
+     - node-exporter_1.1_all.deb
 
 - name: reboot the machie
   shell: "reboot"
