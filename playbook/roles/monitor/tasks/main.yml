@@ -1,32 +1,6 @@
-# - name: copy deps deb packages
-#   copy:
-#      src: deps/
-#      dest: /var/cache/apt/archives/
-
-# - name: install latest git Step One
-#   apt_repository:
-#       repo: 'ppa:git-core/ppa'
-#       state: present
-#
-# - name: install latest ansible Step One
-#   apt_repository:
-#       repo: 'ppa:ansible/ansible'
-#       state: present
-#
-
 - name: apt-get update
   apt:
       update_cache: yes
-
-# - name: install latest git Step Two
-#   apt:
-#       name: git
-#       state: present
-#
-# - name: install latest ansible Step Two
-#   apt:
-#       name: ansible
-#       state: present
 
 - name: set MySQL root password before installing
   debconf: name='mysql-server' question='mysql-server/root_password' value='{{mysql_root_pass | quote}}'  vtype='password'
@@ -78,6 +52,21 @@
       - libzmq3-dev
       - ansible
       - git
+
+- name: install tornado with version 4.5.2
+  pip:
+     name: tornado
+     version: 4.5.2
+
+- name: install all needed python lib by pip
+  pip:
+     name: "{{ item }}"
+     state: latest
+  with_items:
+     - pip 
+     - apscheduler
+     - pywinrm
+     - wtee
 
 - name: copy monitor's deb package to target host
   copy:
