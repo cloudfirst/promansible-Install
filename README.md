@@ -6,7 +6,7 @@
 - install Ubuntu 16.04 Server 64bit with openssh-server
 - login and run 
 ```
-sudo apt-get install python
+sudo apt-get install python ansible
 ```
 - make sure no apt process is running
 
