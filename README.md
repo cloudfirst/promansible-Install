@@ -1,6 +1,6 @@
 # PromAnsible Install Scripts
 
-这是用来自动化安装PromAnsible平台的Ansible脚本。
+这是用来自动化安装[PromAnsible](https://github.com/cloudfirst/PromAnsible)平台的Ansible脚本。
 
 ### Prepare
 - install Ubuntu 16.04 Server 64bit with openssh-server
@@ -9,6 +9,9 @@
 sudo apt-get install python
 ```
 - make sure no apt process is running
+
+### deb package storage
+- when you build [PromAnsible](https://github.com/cloudfirst/PromAnsible) according to [Build Instruction](https://github.com/cloudfirst/PromAnsible/wiki/2-How-to-Build), the cmd `make publish` will copy all the deb packages into directory `promansible-Install/playbook/roles/monitor/files/`
 
 ### Install
 - change monitor to your host actual IP addr
@@ -87,5 +90,8 @@ fatal: [monitor]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect t
 PLAY RECAP **********************************************************************************************************************************************************
 monitor                    : ok=11   changed=10   unreachable=1    failed=0
 ```
+
+### login PromAnsible Admin Web site
+- login `http://monitor-ip`
 
 
