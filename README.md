@@ -95,3 +95,5 @@ monitor                    : ok=11   changed=10   unreachable=1    failed=0
 - login `http://monitor-ip`
 
 
+# Sponsor
+如果觉得这个repository对你有用，欢迎打赏！(点击页面右上角的粉色sponsor按钮)
